@@ -247,24 +247,41 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('dragend')
   }
 
+  console.log(computerSquares);
+
+  function begin(){
+    setInterval(()=> {
+      playGame();
+    }, 500);
+  }
+
   //Game Logic
   function playGame() {
-    console.log(currentPlayer);
-    if (isGameOver) return
+    //console.log(currentPlayer);
+
+    if (isGameOver) return;
+
+
     if (currentPlayer === 'user') {
-      turnDisplay.innerHTML = 'Your Go'
       computerSquares.forEach(square => square.addEventListener('click', function(e) {
         revealSquare(square)
+        currentPlayer = 'computer';
+        turnDisplay.innerHTML = 'Computers Go'
       }))
+      
     }else if (currentPlayer === 'computer') {
-      turnDisplay.innerHTML = 'Computers Go'
       //setTimeout(computerGo, 1000)
       userSquares.forEach(square => square.addEventListener('click', function(e) {
-        p2RevealSquare(square)
+        revealSquare(square)
+        currentPlayer = 'user';
+        turnDisplay.innerHTML = 'Your Go'
       }))
+
     }
   }
-  startButton.addEventListener('click', playGame)
+
+
+  startButton.addEventListener('click', begin);
 
   let destroyerCount = 0
   let submarineCount = 0
@@ -280,46 +297,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function revealSquare(square) {
     //console.log(square.id);
-    if (!square.classList.contains('boom')) {
-      if (square.classList.contains('destroyer')) destroyerCount++
-      if (square.classList.contains('submarine')) submarineCount++
-      if (square.classList.contains('cruiser')) cruiserCount++
-      if (square.classList.contains('battleship')) battleshipCount++
-      if (square.classList.contains('carrier')) carrierCount++
-    }
+    // if (!square.classList.contains('boom')) {
+    //   if (square.classList.contains('destroyer')) destroyerCount++
+    //   if (square.classList.contains('submarine')) submarineCount++
+    //   if (square.classList.contains('cruiser')) cruiserCount++
+    //   if (square.classList.contains('battleship')) battleshipCount++
+    //   if (square.classList.contains('carrier')) carrierCount++
+    // }
+    if(square.classList.contains('boom') || square.classList.contains('miss')) return;
     if (square.classList.contains('taken')) {
       square.classList.add('boom')
     } else {
       square.classList.add('miss')
     }
 
-    checkForWins()
+    //checkForWins()
 
-    currentPlayer = 'computer'
-
-    playGame()
-  }
-
-  function p2RevealSquare(square) {
-    //console.log(square.id);
-    if (!square.classList.contains('boom')) {
-      if (square.classList.contains('destroyer')) cpuDestroyerCount++
-      if (square.classList.contains('submarine')) cpuSubmarineCount++
-      if (square.classList.contains('cruiser')) cpuCruiserCount++
-      if (square.classList.contains('battleship')) cpuBattleshipCount++
-      if (square.classList.contains('carrier')) cpuCarrierCount++
-    }
-    if (square.classList.contains('taken')) {
-      square.classList.add('boom')
-    } else {
-      square.classList.add('miss')
-    }
-
-    checkForWins()
-
-    currentPlayer = 'user'
-    
-    playGame()
+    //playGame()
   }
 
 
