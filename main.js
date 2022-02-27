@@ -164,8 +164,8 @@ document.addEventListener('DOMContentLoaded', () => {
     //index-1 , index-2 and so on, the ship will rebound back to the displayGrid.
     } else if (!isHorizontal && !newNotAllowedVertical.includes(shipLastId)) {
       for (let i=0; i < draggedShipLength; i++) {
-        p1Squares[parseInt(this.dataset.id) - selectedShipIndex + width*i - i].classList.add('taken', shipClass);
-        p1Squares[parseInt(this.dataset.id) - selectedShipIndex + width*i - i].classList.add('p1', shipClass);
+        p1Squares[parseInt(this.dataset.id) - selectedShipIndex + width*i].classList.add('taken', shipClass);
+        p1Squares[parseInt(this.dataset.id) - selectedShipIndex + width*i].classList.add('p1', shipClass);
       }
       numberOfShipsDropped ++;
         console.log(numberOfShipsDropped);
@@ -204,8 +204,8 @@ document.addEventListener('DOMContentLoaded', () => {
     //index-1 , index-2 and so on, the ship will rebound back to the displayGrid.
     } else if (!isHorizontal && !newNotAllowedVertical.includes(shipLastId)) {
       for (let i=0; i < draggedShipLength; i++) {
-        p2Squares[parseInt(this.dataset.id) - selectedShipIndex + width*i - i].classList.add('taken', shipClass);
-        p2Squares[parseInt(this.dataset.id) - selectedShipIndex + width*i - i].classList.add('p2', shipClass);
+        p2Squares[parseInt(this.dataset.id) - selectedShipIndex + width*i].classList.add('taken', shipClass);
+        p2Squares[parseInt(this.dataset.id) - selectedShipIndex + width*i].classList.add('p2', shipClass);
       }
       numberOfShipsDropped ++;
       console.log(numberOfShipsDropped);

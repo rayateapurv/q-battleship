@@ -1,5 +1,6 @@
 body {
   font-family: Poppins, sans-serif;
+  background-color: lightskyblue;
 }
 .container {
   display: flex;
@@ -24,7 +25,7 @@ body {
   height: 400px;
   display: flex;
   flex-wrap: wrap;
-  background-color: lightgreen;
+  background-color: blue;
   margin: 20px;
 }
 .hidden-info {
@@ -32,16 +33,22 @@ body {
 }
 .p1-grid-display {
   width: 400px;
-  height: 400px;
+  height: auto;
   margin: 20px;
-  background-color: yellow;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  /* background-color: yellow; */
 }
 
 .p2-grid-display {
   width: 400px;
-  height: 400px;
+  height: auto;
   margin: 20px;
-  background-color: yellow;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  /* background-color: yellow; */
 }
 
 .p1-destroyer-container {
