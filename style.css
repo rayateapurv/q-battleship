@@ -1,3 +1,6 @@
+body {
+  font-family: Poppins, sans-serif;
+}
 .container {
   display: flex;
 }
@@ -24,7 +27,9 @@
   background-color: lightgreen;
   margin: 20px;
 }
-
+.hidden-info {
+  margin: 20px;
+}
 .p1-grid-display {
   width: 400px;
   height: 400px;
@@ -105,7 +110,6 @@
   display: flex;
   flex-wrap: wrap;
 }
-
 
 .p1-carrier-container {
   width: 200px;
@@ -191,7 +195,6 @@
   flex-wrap: wrap;
 }
 
-
 .p2-carrier-container {
   width: 200px;
   height: 40px;
@@ -233,8 +236,11 @@
 .carrier {
   background-color: green;
 }
-
+.entangled {
+  background-color: grey;
+}
 .boom {
+  z-index: 3;
   background-color: red;
 }
 
