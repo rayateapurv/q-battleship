@@ -2,7 +2,7 @@
   display: flex;
 }
 
-.grid-user {
+.grid-p1 {
   width: 400px;
   height: 400px;
   display: flex;
@@ -16,7 +16,7 @@
   height: 40px;
 }
 
-.grid-computer {
+.grid-p2 {
   width: 400px;
   height: 400px;
   display: flex;
@@ -25,7 +25,7 @@
   margin: 20px;
 }
 
-.grid-display {
+.p1-grid-display {
   width: 400px;
   height: 400px;
   margin: 20px;
@@ -39,14 +39,14 @@
   background-color: yellow;
 }
 
-.destroyer-container {
+.p1-destroyer-container {
   width: 80px;
   height: 40px;
   background-color: orange;
   margin: 10px;
   display: flex;
 }
-.destroyer-container-vertical {
+.p1-destroyer-container-vertical {
   width: 40px;
   height: 80px;
   background-color: orange;
@@ -55,7 +55,7 @@
   flex-wrap: wrap;
 }
 
-.submarine-container {
+.p1-submarine-container {
   width: 120px;
   height: 40px;
   background-color: pink;
@@ -63,7 +63,7 @@
   display: flex;
 }
 
-.submarine-container-vertical {
+.p1-submarine-container-vertical {
   width: 40px;
   height: 120px;
   background-color: pink;
@@ -72,7 +72,7 @@
   flex-wrap: wrap;
 }
 
-.cruiser-container {
+.p1-cruiser-container {
   width: 120px;
   height: 40px;
   background-color: purple;
@@ -80,7 +80,7 @@
   display: flex;
 }
 
-.cruiser-container-vertical {
+.p1-cruiser-container-vertical {
   width: 40px;
   height: 120px;
   background-color: purple;
@@ -89,7 +89,7 @@
   flex-wrap: wrap;
 }
 
-.battleship-container {
+.p1-battleship-container {
   width: 160px;
   height: 40px;
   background-color: aqua;
@@ -97,7 +97,7 @@
   display: flex;
 }
 
-.battleship-container-vertical {
+.p1-battleship-container-vertical {
   width: 40px;
   height: 160px;
   background-color: aqua;
@@ -107,7 +107,7 @@
 }
 
 
-.carrier-container {
+.p1-carrier-container {
   width: 200px;
   height: 40px;
   background-color: green;
@@ -115,7 +115,7 @@
   display: flex;
 }
 
-.carrier-container-vertical {
+.p1-carrier-container-vertical {
   width: 40px;
   height: 200px;
   background-color: green;
