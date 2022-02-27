@@ -41,19 +41,25 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentPlayer = 'p1';
 
   let totalShipCount = 5;
-  const width = 10;
+  const width = 16;
 
   //Create Board
-  function createBoard(grid, squares) {
+  function createBoard(grid, squares, pname) {
     for (let i = 0; i < width*width; i++) {
       const square = document.createElement('div');
-      square.dataset.id = i;
+      if(pname == 'p1'){
+        square.dataset.id = i;
+      }else if(pname == 'p2'){
+        square.dataset.id = 255+i;
+      }
+      
       grid.appendChild(square);
       squares.push(square);
     }
   }
-  createBoard(p1Grid, p1Squares);
-  createBoard(p2Grid, p2Squares);
+  createBoard(p1Grid, p1Squares, 'p1');
+  createBoard(p2Grid, p2Squares, 'p2');
+  console.log(p1Squares);
 
   //Rotate the ships
   function rotate() {
@@ -135,88 +141,153 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function p1DragDrop() {
-    let shipNameWithLastId = draggedShip.lastChild.id;
-    let shipClass = shipNameWithLastId.slice(0, -2);
-    //console.log(shipClass);
+        console.log($(this).attr("data-pname"), isHorizontal);
+        let shipNameWithLastId = draggedShip.lastChild.id;
+        let shipClass = shipNameWithLastId.slice(0, -2);
+        //console.log(this == document.querySelector(`[data-id='${parseInt($(this).attr("data-id"))}']`));
+        //this.append(draggedShip);
+        let shipPlaces = [];
     
-    let lastShipIndex = parseInt(shipNameWithLastId.substr(-1));
-    let shipLastId = lastShipIndex + parseInt(this.dataset.id);
-    //console.log(shipLastId);
-    const notAllowedHorizontal = [0,10,20,30,40,50,60,70,80,90,1,11,21,31,41,51,61,71,81,91,2,22,32,42,52,62,72,82,92,3,13,23,33,43,53,63,73,83,93];
-    const notAllowedVertical = [99,98,97,96,95,94,93,92,91,90,89,88,87,86,85,84,83,82,81,80,79,78,77,76,75,74,73,72,71,70,69,68,67,66,65,64,63,62,61,60];
-    
-    let newNotAllowedHorizontal = notAllowedHorizontal.splice(0, 10 * lastShipIndex);
-    let newNotAllowedVertical = notAllowedVertical.splice(0, 10 * lastShipIndex);
-
-    selectedShipIndex = parseInt(selectedShipNameWithIndex.substr(-1));
-
-    shipLastId = shipLastId - selectedShipIndex;
-    //console.log(shipLastId);
-
-    if (isHorizontal && !newNotAllowedHorizontal.includes(shipLastId)) {
-      for (let i=0; i < draggedShipLength; i++) {
-        p1Squares[parseInt(this.dataset.id) - selectedShipIndex + i].classList.add('taken', shipClass);
-        p1Squares[parseInt(this.dataset.id) - selectedShipIndex + i].classList.add('p1', shipClass);
+        let temp;
+        let place;
+        if(isHorizontal){
+          for (let i = 0; i < draggedShipLength; i++) {
+            temp = parseInt($(this).attr("data-id")) + i;
+            console.log(temp);
+            place = document.querySelector(`[data-id='${temp}']`);
+            shipPlaces.push(place);
+          }
+        }else if(!isHorizontal){
+          for (let i = 0; i < draggedShipLength; i++) {
+            temp = parseInt($(this).attr("data-id")) + (16 * i);
+            console.log(temp);
+            place = document.querySelector(`[data-id='${temp}']`);
+            shipPlaces.push(place);
+          }
+        }
         
-      }numberOfShipsDropped ++;
-        console.log(numberOfShipsDropped);
-    //As long as the index of the ship you are dragging is not in the newNotAllowedVertical array! This means that sometimes if you drag the ship by its
-    //index-1 , index-2 and so on, the ship will rebound back to the displayGrid.
-    } else if (!isHorizontal && !newNotAllowedVertical.includes(shipLastId)) {
-      for (let i=0; i < draggedShipLength; i++) {
-        p1Squares[parseInt(this.dataset.id) - selectedShipIndex + width*i].classList.add('taken', shipClass);
-        p1Squares[parseInt(this.dataset.id) - selectedShipIndex + width*i].classList.add('p1', shipClass);
-      }
-      numberOfShipsDropped ++;
-        console.log(numberOfShipsDropped);
-    } else return;
+        console.log(shipPlaces);
+        for (let p = 0; p < shipPlaces.length; p++) {
+          shipPlaces[p].classList.add('taken', shipClass);      
+        }
+        displayGrid1.removeChild(draggedShip);
+    
 
-    displayGrid1.removeChild(draggedShip);
+    // let shipNameWithLastId = draggedShip.lastChild.id;
+    // let shipClass = shipNameWithLastId.slice(0, -2);
+    // //console.log(shipClass);
+    
+    // let lastShipIndex = parseInt(shipNameWithLastId.substr(-1));
+    // let shipLastId = lastShipIndex + parseInt(this.dataset.id);
+    // //console.log(shipLastId);
+    // const notAllowedHorizontal = [0,10,20,30,40,50,60,70,80,90,1,11,21,31,41,51,61,71,81,91,2,22,32,42,52,62,72,82,92,3,13,23,33,43,53,63,73,83,93];
+    // const notAllowedVertical = [99,98,97,96,95,94,93,92,91,90,89,88,87,86,85,84,83,82,81,80,79,78,77,76,75,74,73,72,71,70,69,68,67,66,65,64,63,62,61,60];
+    
+    // let newNotAllowedHorizontal = notAllowedHorizontal.splice(0, 10 * lastShipIndex);
+    // let newNotAllowedVertical = notAllowedVertical.splice(0, 10 * lastShipIndex);
+
+    // selectedShipIndex = parseInt(selectedShipNameWithIndex.substr(-1));
+
+    // shipLastId = shipLastId - selectedShipIndex;
+    // //console.log(shipLastId);
+
+    // if (isHorizontal && !newNotAllowedHorizontal.includes(shipLastId)) {
+    //   for (let i=0; i < draggedShipLength; i++) {
+    //     p1Squares[parseInt(this.dataset.id) - selectedShipIndex + i].classList.add('taken', shipClass);
+    //     p1Squares[parseInt(this.dataset.id) - selectedShipIndex + i].classList.add('p1', shipClass);
+        
+    //   }numberOfShipsDropped ++;
+    //     console.log(numberOfShipsDropped);
+    // //As long as the index of the ship you are dragging is not in the newNotAllowedVertical array! This means that sometimes if you drag the ship by its
+    // //index-1 , index-2 and so on, the ship will rebound back to the displayGrid.
+    // } else if (!isHorizontal && !newNotAllowedVertical.includes(shipLastId)) {
+    //   for (let i=0; i < draggedShipLength; i++) {
+    //     p1Squares[parseInt(this.dataset.id) - selectedShipIndex + width*i].classList.add('taken', shipClass);
+    //     p1Squares[parseInt(this.dataset.id) - selectedShipIndex + width*i].classList.add('p1', shipClass);
+    //   }
+    //   numberOfShipsDropped ++;
+    //     console.log(numberOfShipsDropped);
+    // } else return;
+
+    // displayGrid1.removeChild(draggedShip);
   }
 
   function p2DragDrop() {
-    let shipNameWithLastId = draggedShip.lastChild.id;
-    let shipClass = shipNameWithLastId.slice(0, -2);
-    //console.log(shipClass);
+        console.log($(this).attr("data-id"), isHorizontal);
+        let shipNameWithLastId = draggedShip.lastChild.id;
+        let shipClass = shipNameWithLastId.slice(0, -2);
+        //console.log(this == document.querySelector(`[data-id='${parseInt($(this).attr("data-id"))}']`));
+        //this.append(draggedShip);
+        let shipPlaces = [];
     
-    let lastShipIndex = parseInt(shipNameWithLastId.substr(-1));
-    let shipLastId = lastShipIndex + parseInt(this.dataset.id);
-    //console.log(shipLastId);
-    const notAllowedHorizontal = [0,10,20,30,40,50,60,70,80,90,1,11,21,31,41,51,61,71,81,91,2,22,32,42,52,62,72,82,92,3,13,23,33,43,53,63,73,83,93]; // i think these numbers arent correct
-    const notAllowedVertical = [99,98,97,96,95,94,93,92,91,90,89,88,87,86,85,84,83,82,81,80,79,78,77,76,75,74,73,72,71,70,69,68,67,66,65,64,63,62,61,60];
+        let temp;
+        let place;
+        if(isHorizontal){
+          for (let i = 0; i < draggedShipLength; i++) {
+            temp = parseInt($(this).attr("data-id")) + i;
+            console.log(temp);
+            place = document.querySelector(`[data-id='${temp}']`);
+            shipPlaces.push(place);
+          }
+        }else if(!isHorizontal){
+          for (let i = 0; i < draggedShipLength; i++) {
+            temp = parseInt($(this).attr("data-id")) + (16 * i);
+            console.log(temp);
+            place = document.querySelector(`[data-id='${temp}']`);
+            shipPlaces.push(place);
+          }
+        }
+        
+        console.log(shipPlaces);
+        for (let p = 0; p < shipPlaces.length; p++) {
+          shipPlaces[p].classList.add('taken', shipClass);      
+        }
+        displayGrid2.removeChild(draggedShip);
     
-    let newNotAllowedHorizontal = notAllowedHorizontal.splice(0, 10 * lastShipIndex);
-    let newNotAllowedVertical = notAllowedVertical.splice(0, 10 * lastShipIndex);
+    // let shipNameWithLastId = draggedShip.lastChild.id;
+    // let shipClass = shipNameWithLastId.slice(0, -2);
+    // //console.log(shipClass);
+    
+    // let lastShipIndex = parseInt(shipNameWithLastId.substr(-1));
+    // let shipLastId = lastShipIndex + parseInt(this.dataset.id);
+    // //console.log(shipLastId);
+    // const notAllowedHorizontal = [0,10,20,30,40,50,60,70,80,90,1,11,21,31,41,51,61,71,81,91,2,22,32,42,52,62,72,82,92,3,13,23,33,43,53,63,73,83,93]; // i think these numbers arent correct
+    // const notAllowedVertical = [99,98,97,96,95,94,93,92,91,90,89,88,87,86,85,84,83,82,81,80,79,78,77,76,75,74,73,72,71,70,69,68,67,66,65,64,63,62,61,60];
+    
+    // let newNotAllowedHorizontal = notAllowedHorizontal.splice(0, 10 * lastShipIndex);
+    // let newNotAllowedVertical = notAllowedVertical.splice(0, 10 * lastShipIndex);
 
-    selectedShipIndex = parseInt(selectedShipNameWithIndex.substr(-1));
+    // selectedShipIndex = parseInt(selectedShipNameWithIndex.substr(-1));
 
-    shipLastId = shipLastId - selectedShipIndex;
-    //console.log(shipLastId);
+    // shipLastId = shipLastId - selectedShipIndex;
+    // //console.log(shipLastId);
 
-    if (isHorizontal && !newNotAllowedHorizontal.includes(shipLastId)) {
-      for (let i=0; i < draggedShipLength; i++) {
-        p2Squares[parseInt(this.dataset.id) - selectedShipIndex + i].classList.add('taken', shipClass);
-        p2Squares[parseInt(this.dataset.id) - selectedShipIndex + i].classList.add('p2', shipClass);
-      }
-      numberOfShipsDropped ++;
-      console.log(numberOfShipsDropped);
-    //As long as the index of the ship you are dragging is not in the newNotAllowedVertical array! This means that sometimes if you drag the ship by its
-    //index-1 , index-2 and so on, the ship will rebound back to the displayGrid.
-    } else if (!isHorizontal && !newNotAllowedVertical.includes(shipLastId)) {
-      for (let i=0; i < draggedShipLength; i++) {
-        p2Squares[parseInt(this.dataset.id) - selectedShipIndex + width*i].classList.add('taken', shipClass);
-        p2Squares[parseInt(this.dataset.id) - selectedShipIndex + width*i].classList.add('p2', shipClass);
-      }
-      numberOfShipsDropped ++;
-      console.log(numberOfShipsDropped);
-    } else return;
+    // if (isHorizontal && !newNotAllowedHorizontal.includes(shipLastId)) {
+    //   for (let i=0; i < draggedShipLength; i++) {
+    //     p2Squares[parseInt(this.dataset.id) - selectedShipIndex + i].classList.add('taken', shipClass);
+    //     p2Squares[parseInt(this.dataset.id) - selectedShipIndex + i].classList.add('p2', shipClass);
+    //   }
+    //   numberOfShipsDropped ++;
+    //   console.log(numberOfShipsDropped);
+    // //As long as the index of the ship you are dragging is not in the newNotAllowedVertical array! This means that sometimes if you drag the ship by its
+    // //index-1 , index-2 and so on, the ship will rebound back to the displayGrid.
+    // } else if (!isHorizontal && !newNotAllowedVertical.includes(shipLastId)) {
+    //   for (let i=0; i < draggedShipLength; i++) {
+    //     p2Squares[parseInt(this.dataset.id) - selectedShipIndex + width*i].classList.add('taken', shipClass);
+    //     p2Squares[parseInt(this.dataset.id) - selectedShipIndex + width*i].classList.add('p2', shipClass);
+    //   }
+    //   numberOfShipsDropped ++;
+    //   console.log(numberOfShipsDropped);
+    // } else return;
 
-    displayGrid2.removeChild(draggedShip);
+    // displayGrid2.removeChild(draggedShip);
   }
 
   function dragEnd() {
     console.log('dragend');
   }
+
+  
   function entanleBegin(){
     setInterval(()=> {
       chooseEntanglePoints();

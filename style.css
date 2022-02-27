@@ -39,8 +39,8 @@ h1 {
 }
 
 .grid-p1 {
-  width: 400px;
-  height: 400px;
+  width: 640px;
+  height: 640px;
   display: flex;
   flex-wrap: wrap;
   /* background-color: blue; */
@@ -55,8 +55,8 @@ h1 {
 }
 
 .grid-p2 {
-  width: 400px;
-  height: 400px;
+  width: 640px;
+  height: 640px;
   display: flex;
   flex-wrap: wrap;
   /* background-color: blue; */
