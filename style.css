@@ -81,7 +81,7 @@ h1 {
   margin: 20px;
 }
 .p1-grid-display {
-  width: 400px;
+  width: 640px;
   height: auto;
   margin: 20px;
   display: flex;
@@ -91,7 +91,7 @@ h1 {
 }
 
 .p2-grid-display {
-  width: 400px;
+  width: 640px;
   height: auto;
   margin: 20px;
   display: flex;
@@ -321,6 +321,9 @@ h1 {
   /* background-color: grey; */
   background-image: url(./assets/anchor2.png);
 }
+.hide {
+  background-image: url(./assets/ocean.jpg);
+}
 .boom {
   z-index: 3;
   /* background-color: red; */
@@ -331,4 +334,3 @@ h1 {
   /* background-color: black; */
   background-image: url(./assets/miss_ocean.jpg);
 }
-

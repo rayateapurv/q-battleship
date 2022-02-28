@@ -69,18 +69,18 @@ document.addEventListener('DOMContentLoaded', () => {
       const carrier2 = document.querySelector('.p2-carrier-container');
 
       if(room.getHostName() === client.getUid()){
-        // destroyer2.style.opacity = 0;
-        // submarine2.style.opacity = 0;
-        // cruiser2.style.opacity = 0;
-        // battleship2.style.opacity = 0;
-        // carrier2.style.opacity = 0;
+        destroyer2.style.opacity = 0;
+        submarine2.style.opacity = 0;
+        cruiser2.style.opacity = 0;
+        battleship2.style.opacity = 0;
+        carrier2.style.opacity = 0;
         console.log('you host')
       }else{
-        // destroyer1.style.opacity = 0;
-        // submarine1.style.opacity = 0;
-        // cruiser1.style.opacity = 0;
-        // battleship1.style.opacity = 0;
-        // carrier1.style.opacity = 0;
+        destroyer1.style.opacity = 0;
+        submarine1.style.opacity = 0;
+        cruiser1.style.opacity = 0;
+        battleship1.style.opacity = 0;
+        carrier1.style.opacity = 0;
         console.log('you not host');
       }
     
@@ -450,11 +450,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log(temp);
                 place = document.querySelector(`[data-id='${temp}']`);
                 shipPlaces.push(place);
-<<<<<<< Updated upstream
                 tempPlaces.push(temp);
-=======
                 numberOfShipsDropped++;
->>>>>>> Stashed changes
               }
             }else if(!isHorizontal){
               for (let i = 0; i < draggedShipLength; i++) {
@@ -462,11 +459,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log(temp);
                 place = document.querySelector(`[data-id='${temp}']`);
                 shipPlaces.push(place);
-<<<<<<< Updated upstream
                 tempPlaces.push(temp);
-=======
                 numberOfShipsDropped++;
->>>>>>> Stashed changes
               }
             }
             
@@ -506,45 +500,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             console.log(shared);
             displayGrid1.removeChild(draggedShip);
-        
-    
-        // let shipNameWithLastId = draggedShip.lastChild.id;
-        // let shipClass = shipNameWithLastId.slice(0, -2);
-        // //console.log(shipClass);
-        
-        // let lastShipIndex = parseInt(shipNameWithLastId.substr(-1));
-        // let shipLastId = lastShipIndex + parseInt(this.dataset.id);
-        // //console.log(shipLastId);
-        // const notAllowedHorizontal = [0,10,20,30,40,50,60,70,80,90,1,11,21,31,41,51,61,71,81,91,2,22,32,42,52,62,72,82,92,3,13,23,33,43,53,63,73,83,93];
-        // const notAllowedVertical = [99,98,97,96,95,94,93,92,91,90,89,88,87,86,85,84,83,82,81,80,79,78,77,76,75,74,73,72,71,70,69,68,67,66,65,64,63,62,61,60];
-        
-        // let newNotAllowedHorizontal = notAllowedHorizontal.splice(0, 10 * lastShipIndex);
-        // let newNotAllowedVertical = notAllowedVertical.splice(0, 10 * lastShipIndex);
-    
-        // selectedShipIndex = parseInt(selectedShipNameWithIndex.substr(-1));
-    
-        // shipLastId = shipLastId - selectedShipIndex;
-        // //console.log(shipLastId);
-    
-        // if (isHorizontal && !newNotAllowedHorizontal.includes(shipLastId)) {
-        //   for (let i=0; i < draggedShipLength; i++) {
-        //     p1Squares[parseInt(this.dataset.id) - selectedShipIndex + i].classList.add('taken', shipClass);
-        //     p1Squares[parseInt(this.dataset.id) - selectedShipIndex + i].classList.add('p1', shipClass);
-            
-        //   }numberOfShipsDropped ++;
-        //     console.log(numberOfShipsDropped);
-        // //As long as the index of the ship you are dragging is not in the newNotAllowedVertical array! This means that sometimes if you drag the ship by its
-        // //index-1 , index-2 and so on, the ship will rebound back to the displayGrid.
-        // } else if (!isHorizontal && !newNotAllowedVertical.includes(shipLastId)) {
-        //   for (let i=0; i < draggedShipLength; i++) {
-        //     p1Squares[parseInt(this.dataset.id) - selectedShipIndex + width*i].classList.add('taken', shipClass);
-        //     p1Squares[parseInt(this.dataset.id) - selectedShipIndex + width*i].classList.add('p1', shipClass);
-        //   }
-        //   numberOfShipsDropped ++;
-        //     console.log(numberOfShipsDropped);
-        // } else return;
-    
-        // displayGrid1.removeChild(draggedShip);
       }
     
       function p2DragDrop() {
@@ -619,7 +574,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('dragend');
       }
     
-      
+      displaySquare();
       function entanleBegin(){
         setInterval(()=> {
           chooseEntanglePoints();
@@ -633,19 +588,19 @@ document.addEventListener('DOMContentLoaded', () => {
           }, 500);
         }
         else
-          infoDisplay.innerHTML = 'Waiting for all 7 entangled squares'; 
+          infoDisplay.innerHTML = 'Waiting for all ' + entangleMax + ' entangled squares'; 
       }
       
       let turnState = 'p1';
       //Game Logic
       function playGame() {
         //console.log(currentPlayer);
-    
         if (isGameOver) return;
         if(numberOfShipsDropped>=totalShipCount){
           //infoDisplay.innerHTML = ''
           if (currentPlayer === 'p1') {
             turnDisplay.innerHTML = 'Player 1 Go';
+            
             p2Squares.forEach(square => square.addEventListener('click', function(e) {
             revealSquare(square, 'p1');
             currentPlayer = 'p2';
@@ -677,14 +632,38 @@ document.addEventListener('DOMContentLoaded', () => {
       let p2CruiserCount = 0;
       let p2BattleshipCount = 0;
       let p2CarrierCount = 0;
-    
+      function displaySquare(){
+        console.log('fn running')
+        if(room.getHostName() === client.getUid()){
+          p2Squares.forEach(square => {
+            if (square.classList.contains('boom') || square.classList.contains('miss')){
+              revealSquare(square, 'p2');
+            }
+            else{
+              square.classList.add('hide');
+            }
+          })
+        }
+        else{
+          p1Squares.forEach(square => {
+            if (square.classList.contains('boom') || square.classList.contains('miss')){
+              square.classList.remove('hide');
+              revealSquare(square, 'p1');
+            }
+            else{
+              square.classList.add('hide');
+            }
+          })
+        }
+      }
+
       function revealSquare(square, turnState) {
         if (!square.classList.contains('boom') && square.classList.contains('p1')) { //p2 since player incrememnts before this check.. but it is actually checking for p1
-          if (square.classList.contains('destroyer')) {destroyerCount++; console.log( "player 1 destroyer count:", destroyerCount)}
-          if (square.classList.contains('submarine')) {submarineCount++; console.log( "player 1 sub count:", submarineCount)}
-          if (square.classList.contains('cruiser')) {cruiserCount++; console.log( "player 1 cruiser count:", cruiserCount)}
-          if (square.classList.contains('battleship')) {battleshipCount++; console.log( "player 1 battleship count:", battleshipCount)}
-          if (square.classList.contains('carrier')) {carrierCount++; console.log( "player 1 carrier count:", carrierCount)}
+          if (square.classList.contains('destroyer')) {destroyerCount++;}
+          if (square.classList.contains('submarine')) {submarineCount++;}
+          if (square.classList.contains('cruiser')) {cruiserCount++;}
+          if (square.classList.contains('battleship')) {battleshipCount++;}
+          if (square.classList.contains('carrier')) {carrierCount++;}
         }
         else if (!square.classList.contains('boom') && square.classList.contains('p2')) {
           if (square.classList.contains('destroyer')) {p2DestroyerCount++;}
