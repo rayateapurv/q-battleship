@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const entangleButton = document.querySelector('#entangle');
       const rotateButton = document.querySelector('#rotate');
     
-    
+      //const whichPlayerDisplay = document.querySelector('#who-you');
       const turnDisplay = document.querySelector('#whose-go');
       const infoDisplay = document.querySelector('#info');
       //const chooseTeam = document.querySelector('#chooseteam');
@@ -114,6 +114,8 @@ document.addEventListener('DOMContentLoaded', () => {
       shared.crui2pos = [];
       shared.batt2pos = [];
       shared.carr2pos = [];
+      shared.entangledPoints = [];
+  
       // setInterval(() => {
       //   console.log(shared);
       // }, 1000);
@@ -520,6 +522,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 place = document.querySelector(`[data-id='${temp}']`);
                 shipPlaces.push(place);
                 tempPlaces.push(temp);
+                numberOfShipsDropped++;
               }
             }else if(!isHorizontal){
               for (let i = 0; i < draggedShipLength; i++) {
@@ -528,6 +531,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 place = document.querySelector(`[data-id='${temp}']`);
                 shipPlaces.push(place);
                 tempPlaces.push(temp);
+                numberOfShipsDropped++;
               }
             }
             
@@ -573,16 +577,17 @@ document.addEventListener('DOMContentLoaded', () => {
       function dragEnd() {
         console.log('dragend');
       }
-    
+      setInterval(()=> {
       displaySquare();
-      function entanleBegin(){
+      }, 500);
+      function entangleBegin(){
         setInterval(()=> {
           chooseEntanglePoints();
         }, 500);
       }
       function begin(){
-        if(entangleCount>=entangleMax){
-          entangleButton.removeEventListener('click', entanleBegin);
+        if(shared.entangledPoints[entangleMax-1]!= false){
+          entangleButton.removeEventListener('click', entangleBegin);
           setInterval(()=> {
             playGame();
           }, 500);
@@ -614,12 +619,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }))
           }
         }
-        else
+        else if (numberOfShipsDropped<totalShipCount)
           infoDisplay.innerHTML = 'All Ships Not Placed'
         
       }
       startButton.addEventListener('click', begin);
-      entangleButton.addEventListener('click', entanleBegin);
+      entangleButton.addEventListener('click', entangleBegin);
     
       let destroyerCount = 0;
       let submarineCount = 0;
@@ -633,7 +638,9 @@ document.addEventListener('DOMContentLoaded', () => {
       let p2BattleshipCount = 0;
       let p2CarrierCount = 0;
       function displaySquare(){
+        
         console.log('fn running')
+        console.log(shared.entangledPoints)
         if(room.getHostName() === client.getUid()){
           p2Squares.forEach(square => {
             if (square.classList.contains('boom') || square.classList.contains('miss')){
@@ -719,9 +726,15 @@ document.addEventListener('DOMContentLoaded', () => {
       let entangleMax=5;
       let paired=false;
       let i=0;
+      for(let i=0;i<entangleMax;i++){
+        shared.entangledPoints.push(false)
+      }
+
       function chooseEntanglePoints(){
+        
         p1Squares.forEach(square => square.addEventListener('dblclick', function(e){
           //console.log("entangle this point");
+          console.log(shared.entangledPoints);
           if (square.classList.contains('taken') && !square.classList.contains('entangled') && entangleCount<entangleMax) {
             playMusic("./assets/sounds/entPlaced.wav");
             square.classList.add('entangled');
@@ -742,7 +755,15 @@ document.addEventListener('DOMContentLoaded', () => {
         //   square.style.backgroundColor = "grey";
         // }));
       }
+
       function assignEntanglePair(){
+      
+        for(let i=0; i<p1Squares.length; i++){
+          if (p1Squares[i].classList.contains('entangled') && !p1Squares[i].classList.contains('sharedEnt')) {
+            shared.entangledPoints[entangleCount]=i;
+            p1Squares[i].classList.add('sharedEnt');
+          }
+        }
         randomPoint= Math.floor(Math.random() * (width*width));
         while(paired===false){
           if (p2Squares[randomPoint].classList.contains('taken') && !p2Squares[randomPoint].classList.contains('entangled')){
