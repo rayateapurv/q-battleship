@@ -48,7 +48,8 @@ h1 {
   display: flex;
 }
 .mainWrapper {
-  margin-left: 230px;
+  margin: auto;
+  width: fit-content;
 }
 
 .grid-p1 {
@@ -314,7 +315,7 @@ h1 {
 
 .carrier {
   background-image: url(./assets/boat.png);
-  background-color: var(--battleship);
+  background-color: var(--carrier);
 }
 .entangled {
   /* background-color: grey; */
