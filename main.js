@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       shared.currentTurn = shared.currentTurn || "Player1";
     
-      let totalShipCount = 5;
+      let totalShipCount = 2;
       const width = 16;
     
       //Create Board
@@ -450,7 +450,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log(temp);
                 place = document.querySelector(`[data-id='${temp}']`);
                 shipPlaces.push(place);
+<<<<<<< Updated upstream
                 tempPlaces.push(temp);
+=======
+                numberOfShipsDropped++;
+>>>>>>> Stashed changes
               }
             }else if(!isHorizontal){
               for (let i = 0; i < draggedShipLength; i++) {
@@ -458,7 +462,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log(temp);
                 place = document.querySelector(`[data-id='${temp}']`);
                 shipPlaces.push(place);
+<<<<<<< Updated upstream
                 tempPlaces.push(temp);
+=======
+                numberOfShipsDropped++;
+>>>>>>> Stashed changes
               }
             }
             
@@ -652,7 +660,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }
         else
-        infoDisplay.innerHTML = 'All Ships Not Placed'
+          infoDisplay.innerHTML = 'All Ships Not Placed'
         
       }
       startButton.addEventListener('click', begin);
@@ -689,6 +697,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if(square.classList.contains('boom') || square.classList.contains('miss')) return;
         if (square.classList.contains('taken') && square.classList.contains('entangled') && square.classList.contains('p1')) {
           square.classList.add('boom');
+          playMusic("./assets/sounds/boom.wav");
           for(let i=0; i<entangleMax; i++){
             if(square.classList.contains(i)){
               tempIndex = i;
@@ -699,8 +708,10 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }else if(square.classList.contains('taken')) { 
           square.classList.add('boom');
+          playMusic("./assets/sounds/boom.wav");
         } else {
           square.classList.add('miss');
+          playMusic("./assets/sounds/miss.wav");
         }
       
     
@@ -733,6 +744,7 @@ document.addEventListener('DOMContentLoaded', () => {
         p1Squares.forEach(square => square.addEventListener('dblclick', function(e){
           //console.log("entangle this point");
           if (square.classList.contains('taken') && !square.classList.contains('entangled') && entangleCount<entangleMax) {
+            playMusic("./assets/sounds/entPlaced.wav");
             square.classList.add('entangled');
             square.classList.add(entangleCount);
             assignEntanglePair();
@@ -770,6 +782,7 @@ document.addEventListener('DOMContentLoaded', () => {
           console.log('ENTERED')
           if(p2sqr.classList.contains(i)){
             p2sqr.classList.add('boom');
+            playMusic("./assets/sounds/boom.wav");
             console.log("pair is blown");
           }
         })
@@ -824,12 +837,12 @@ document.addEventListener('DOMContentLoaded', () => {
           gameOver()
         }
       }
-    
-      function gameOver() {
-        isGameOver = true;
-        startButton.removeEventListener('click', begin);
+      function playMusic(url) {
+        new Audio(url).play()
       }
+    function gameOver() {
+      isGameOver = true;
+      startButton.removeEventListener('click', begin);
+    }
   }
-
-  
 })
