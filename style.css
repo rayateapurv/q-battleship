@@ -80,6 +80,9 @@ h1 {
 .hidden-info {
   margin: 20px;
 }
+.instructions {
+  margin: 20px;
+}
 .p1-grid-display {
   width: 640px;
   height: auto;
