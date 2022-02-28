@@ -4,8 +4,9 @@
     <meta charset="utf-8">
     <title>Battle Ships</title>
     <link rel="stylesheet" href="style.css">
-    <script src="main.js" charset="utf-8"></script>
     <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/p5.party@latest/dist/p5.party.js"></script>
+    <script src="main.js" charset="utf-8"></script>
   </head>
   <body>
     <h1>bATTLESHIP</h1>
@@ -16,6 +17,10 @@
       </div>
 
       <div class="hidden-info">
+        <select id = "chooseteam">
+          <option> Player1 </option>  
+          <option> Player2 </option>   
+        </select>  
         <button id="entangle">Entangle Squares</button>
         <button id="start">Start Game</button>
         <button id="rotate">Rotate Your Ships</button>

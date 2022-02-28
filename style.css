@@ -28,6 +28,19 @@ button {
 button:hover {
   background-color: var(--bgDark);
 }
+
+select {
+  background-color: var(--bgMed);
+  border-radius: 4px;
+  display: inline-block;
+  cursor: pointer;
+  color: var(--bgLight);
+  font-size: 12px;
+  padding: 7px 12px;
+  text-decoration: none;
+  border: none;
+}
+
 h1 {
   text-align: center;
 }
